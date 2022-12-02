@@ -1,3 +1,6 @@
+import time
+#Run time: --- 0.005963563919067383 seconds ---
+
 # Elves are logging the calories of the food items that they are carrying.
 # Each elf logs each item individually on a new line, the next
 # elf leaves an empty line before starting their list.
@@ -7,7 +10,9 @@
 # Question 2:
 # How many calories are each of the top 3 elves with the most calories carrying?
 
-# Open file
+# This is for timing run time
+start_time = time.time()
+
 my_file = open('./Input.txt', 'r')
 
 # reading the file
@@ -29,11 +34,13 @@ for item in data_into_list:
         Elves.append(CumCount)  # Creates an elf level list, summing each elfs calories.
         CumCount = 0            # Reset cumulative calorie count per elf.
     else:
-        num = int(item)         # Cast the string number to an interget
+        num = int(item)         # Cast the string number to an integer.
         CumCount += num         # Add next food item to previous (cumulative calorie count per elf)
     
     if CumCount > MaxCal:
-        MaxCal = CumCount       # Variable for holding the highest number of calories any elf has.
+        MaxCal = CumCount
 
 print("Answer to part 1: ", MaxCal)
 print("Answer to part 2: ", sum(sorted(Elves, reverse=True)[:3]))
+
+print("--- %s seconds ---" % (time.time() - start_time))
