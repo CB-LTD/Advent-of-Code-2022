@@ -1,25 +1,12 @@
+# Elves are logging the calories of the food items that they are carrying.
+# Each elf logs each item individually on a new line, the next
+# elf leaves an empty line before starting their list.
 
-#f = open('./Input.txt','r')
-
-#data = f.readlines()
-##data2 = f.read().splitlines()
-
-#f.close()
-
-#print(data)
-
-
-
-#with open('./Input.txt') as file:
-#    for line in file:
-#        print(line.rstrip())
-
-
-#with open('./Input.txt') as file:
-#    lines = [line.rstrip() for line in file]
-
-
-my_file = open('./Input3.txt', 'r')
+# Question 1:
+# How many calories is the elf with the most calories carrying?
+# Question 2:
+# How many calories are each of the top 3 elves with the most calories carrying?
+my_file = open('./Input.txt', 'r')
 
 # reading the file
 data = my_file.read()
