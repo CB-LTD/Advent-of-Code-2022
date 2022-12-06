@@ -1,6 +1,5 @@
 import time
-from itertools import groupby
-# Runtime: 
+# Runtime: --- 0.011002063751220703 seconds ---
 
 # Elves have been assigned areas to clean. Many of them have been assigned to clean the same areas, they are interested in
 # reducing duplication of effort.
@@ -10,9 +9,8 @@ from itertools import groupby
 
 # Question 1:
 # How many elf pairs have 1 area assignment that completely overlaps the other?
-
-# This is for timing run time
-start_time = time.time()
+# Question 2:
+# In how many assignment pairs do the ranges overlap inc partial overlap?
 
 # This is for timing run time
 start_time = time.time()
@@ -35,14 +33,6 @@ my_file.close()
 # Count intstances where:
 # min(elf1AreaID_Low) < min(elf2AreaID_Low) and max(elf1AreaID_High) > max(elf2AreaID_High) or min(elf1AreaID_Low) > min(elf2AreaID_Low) and max(elf1AreaID_High) < max(elf2AreaID_High)
 
-# Didn't understand groupby.
-# chunks = (list(g) for k,g in groupby(data_into_list, key=lambda x: x != ',') if k)
-# for chunk in chunks:    
-#     ...
-# print(chunk)
-
-# data_into_list = data_into_list[0:4] 
-
 # Split each element in list
 Elf1 = [item.split(',', 1)[0] for item in data_into_list]
 Elf2 = [item.split(',', 1)[1] for item in data_into_list]
@@ -53,35 +43,53 @@ Elf1AreaID_High = [item.split('-', 1)[1] for item in Elf1]
 Elf2AreaID_Low = [item.split('-', 1)[0] for item in Elf2]
 Elf2AreaID_High = [item.split('-', 1)[1] for item in Elf2]
 
+# Elf1AreaID_Low, Elf1AreaID_High, Elf2AreaID_Low, Elf2AreaID_High = [92], [92], [7], [91]
+
 i = 0
 Instances = 0
 while i < len(data_into_list):
-    if (int(Elf1AreaID_Low[i]) <= int(Elf2AreaID_Low[i]) and int(Elf1AreaID_High[i]) >= int(Elf2AreaID_High[i])) or (int(Elf2AreaID_Low[i]) <= int(Elf1AreaID_Low[i]) and int(Elf2AreaID_High[i]) >= int(Elf1AreaID_High[i])):
+    if (
+        int(Elf1AreaID_Low[i]) <= int(Elf2AreaID_Low[i]) 
+        and int(Elf1AreaID_High[i]) >= int(Elf2AreaID_High[i])       
+    or (
+        int(Elf2AreaID_Low[i]) <= int(Elf1AreaID_Low[i])
+        and int(Elf2AreaID_High[i]) >= int(Elf1AreaID_High[i])
+        )):
         Instances += 1
         i += 1
-        # '72-92,48-88'
-        # print(Elf1AreaID_Low[i])
-        # print(Elf1AreaID_High[i])
-        # print(Elf2AreaID_Low[i])
-        # print(Elf2AreaID_High[i])
     else:
         i += 1
-# print(data_into_list)
-
-# print(Elf1)
-# print(Elf2)
-
-# print(Elf1AreaID_Low)
-# print(Elf1AreaID_High)
-# print(Elf2AreaID_Low)
-# print(Elf2AreaID_High)
-
-# print(Instances)
 
 answer  = Instances
-# answer2 = ''
 
-# print('Answer to part 1:', answer)
-# print('Answer to part 2:', answer2)
+# Question 2:
+# answer has been populated so we can reuse these variables.
+i = 0
+Instances = 0
+while i < len(data_into_list):
+    if (
+        int(Elf1AreaID_Low[i]) >= int(Elf2AreaID_Low[i]) 
+        and int(Elf1AreaID_Low[i]) <= int(Elf2AreaID_High[i])       
+    or (
+        int(Elf1AreaID_High[i]) >= int(Elf2AreaID_Low[i]) 
+        and int(Elf1AreaID_High[i]) <= int(Elf2AreaID_High[i])       
+        )
+    or (
+        int(Elf2AreaID_Low[i]) >= int(Elf1AreaID_Low[i])
+        and int(Elf2AreaID_Low[i]) <= int(Elf1AreaID_High[i])
+        )
+    or (
+        int(Elf2AreaID_High[i]) >= int(Elf1AreaID_Low[i])
+        and int(Elf2AreaID_High[i]) <= int(Elf1AreaID_High[i])
+        )):
+        Instances += 1
+        i += 1
+    else:
+        i += 1
 
-# print("--- %s seconds ---" % (time.time() - start_time))
+answer2 = Instances
+
+print('Answer to part 1:', answer)
+print('Answer to part 2:', answer2)
+
+print("--- %s seconds ---" % (time.time() - start_time))
